@@ -4,6 +4,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   imports: [
     CommonModule,
     RouterModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SharedModule
   ],
   exports: [
     NavBarComponent,
