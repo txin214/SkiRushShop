@@ -29,9 +29,10 @@ public class ProductsController : BaseApiController
         _mapper = mapper;
     }
 
+    [Cached(600)]
     [HttpGet]
     public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
-        [FromQuery] ProductSpecParams productParams)
+            [FromQuery] ProductSpecParams productParams)
     {
         var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
         var countSpec = new ProductsWithFiltersForCountSpecification(productParams);
@@ -45,6 +46,7 @@ public class ProductsController : BaseApiController
             productParams.PageSize, totalItems, data));
     }
 
+    [Cached(600)]
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
@@ -57,12 +59,14 @@ public class ProductsController : BaseApiController
     }
 
     [HttpGet("brands")]
+    [Cached(600)]
     public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
     {
         return Ok(await _productBrandRepo.ListAllAsync());
     }
 
     [HttpGet("types")]
+    [Cached(600)]
     public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes()
     {
         return Ok(await _productTypeRepo.ListAllAsync());
