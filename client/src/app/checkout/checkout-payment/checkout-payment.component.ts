@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { NavigationExtras, Router } from '@angular/router';
+import { CartService } from 'src/app/cart/cart.service';
+import { Cart } from 'src/app/shared/models/cart';
+import { Address } from 'src/app/shared/models/user';
+import { CheckoutService } from '../checkout.service';
 
 @Component({
   selector: 'app-checkout-payment',
   templateUrl: './checkout-payment.component.html',
   styleUrls: ['./checkout-payment.component.scss']
 })
-export class CheckoutPaymentComponent implements OnInit {
+export class CheckoutPaymentComponent {
+  @Input() checkoutForm?: FormGroup;
 
-  constructor() { }
+  constructor(private cartService: CartService, private checkoutService: CheckoutService, private router: Router) {}
 
-  ngOnInit(): void {
+  submitOrder() {
+    const basket = this.cartService.getCurrentCartValue();
+    if (!basket) return;
+    const orderToCreate = this.getOrderToCreate(basket);
+    if (!orderToCreate) return;
+    this.checkoutService.createOrder(orderToCreate).subscribe({
+    next: order => {
+      console.log(order);
+        this.cartService.deleteLocalCart();
+        const navigationExtras: NavigationExtras = {state: order};
+        this.router.navigate(['checkout/success'], navigationExtras);
+    }
+    })
   }
 
+  private getOrderToCreate(cart: Cart) {
+    const deliveryMethodId = this.checkoutForm?.get('deliveryForm')?.get('deliveryMethod')?.value;
+    const shipToAddress = this.checkoutForm?.get('addressForm')?.value as Address;
+    if (!deliveryMethodId || !shipToAddress) return;
+    return {
+      basketId: cart.id,
+      deliveryMethodId: deliveryMethodId,
+      shipToAddress: shipToAddress
+    }
+  }
 }

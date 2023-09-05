@@ -12,12 +12,11 @@ export class CheckoutAddressComponent {
 
   constructor(private accountService: AccountService) {}
 
-  // saveUserAddress() {
-  //   this.accountService.updateUserAddress(this.checkoutForm?.get('addressForm')?.value).subscribe({
-  //     next: () => {
-  //       this.toastr.success('Address saved');
-  //       this.checkoutForm?.get('addressForm')?.reset(this.checkoutForm?.get('addressForm')?.value);
-  //     }
-  //   })
-  // }
+  saveUserAddress() {
+    this.accountService.updateUserAddress(this.checkoutForm?.get('addressForm')?.value).subscribe({
+      next: () => {
+        this.checkoutForm?.get('addressForm')?.reset(this.checkoutForm?.get('addressForm')?.value);
+      }
+    })
+  }
 }
