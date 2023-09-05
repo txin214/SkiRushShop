@@ -1,4 +1,4 @@
-<div class="table-responsive" *ngIf="(cartService.cartSource$ | async) as basket">
+<div class="table-responsive" *ngIf="(cartService.cartSource$ | async) as cart">
     <table class="table">
         <thead class="text-uppercase" [class.bg-light]="isCart">
             <tr>
@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of basket.items">
+            <tr *ngFor="let item of cart.items">
                 <th>
                     <div class="p-2 d-inline-block">
                         <img src="{{item.pictureUrl}}" 
@@ -32,7 +32,7 @@
                 </th>
                 <td class="align-middle"><strong>{{item.price | currency}}</strong></td>
                 <td class="align-middle">
-                    <div class="d-flex align-items-center" [class.justify-content-center]="isCart">
+                    <div class="d-flex align-items-center" [class.justify-content-center]="!isCart">
                         <i *ngIf="isCart" class="fa fa-minus-circle text-warning me-2" 
                             style="cursor: pointer; font-size: 2em;"
                             (click)="removeCartItem(item.id, 1)"

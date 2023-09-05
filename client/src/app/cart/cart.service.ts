@@ -82,9 +82,7 @@ export class CartService {
   deleteCart(cart: Cart) {
     return this.http.delete(this.baseUrl + 'cart?id=' + cart.id).subscribe({
       next: () => {
-        this.cartSource.next(null);
-        this.cartTotalSource.next(null);
-        localStorage.removeItem('cart_id');
+        this.deleteLocalCart();
       }
     })
   }
@@ -132,6 +130,6 @@ export class CartService {
   deleteLocalCart() {
     this.cartSource.next(null);
     this.cartTotalSource.next(null);
-    localStorage.removeItem('basket_id');
+    localStorage.removeItem('cart_id');
   }
 }
