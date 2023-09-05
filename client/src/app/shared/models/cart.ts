@@ -13,11 +13,16 @@ export interface CartItem {
 export interface Cart {
     id: string;
     items: CartItem[];
+    clientSecret?: string;
+    paymentIntentId?: string;
+    deliveryMethodId?: number;
+    shippingPrice: number;
 }
 
 export class Cart implements Cart {
     id = cuid();
     items: CartItem[] = [];
+    shippingPrice = 0;
 }
 
 export interface CartTotals {
