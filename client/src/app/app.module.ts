@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
+import { OrderDetailedComponent } from './order-detailed/order-detailed.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OrderDetailedComponent
   ],
   imports: [
     BrowserModule,
